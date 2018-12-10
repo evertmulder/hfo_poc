@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+<h3>{{ message }}</h3>
+
+<form action="/insertaccount" method="POST">
+voornaam:     	<input type="text" name="fname"><br>
+achternaam:     <input type="text" name="lname"><br>
+email: 		      <input type="text" name="email"><br>
+wachtwoord:   	<input type="text" name="wachtwoord"<br>
+geboortedatum: 	<input type="text" name="geboortedatum"><br>
+geslacht: 	    <input type="text" name="geslacht"><br>
+adres: 		      <input type="text" name="adres"><br>
+postcode: 	    <input type="text" name="postcode"><br>
+woonplaats: 	  <input type="text" name="woonplaats"><br>
+telnr: 		      <input type="text" name="telnr"><br>
+<button  type="submit">maak account </button><br>
+</form>
+
+{{ list_of_products|safe }}
+
+{% endblock %}
