@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+<h3>{{ message }}</h3>
+{% for artikelgroep in artikelgroepen %}
+
+<table class="table table-striped" style="width: 50%">
+	<thead>
+		<tr>
+			<th colspan="2">{{artikelgroep.omschrijving}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for artikel in artikelgroep.artikelen %}
+		<tr>
+			<td style="width: 80%">{{artikel.omschrijving}}</td>
+			<td style="width: 20%" class="text-right">{{artikel.advies_verkoopprijs}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endfor %}
+
+{% endblock %}

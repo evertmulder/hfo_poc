@@ -1,49 +1,49 @@
-# from sqlalchemy import Column, Integer, String
-# from flask_sqlalchemy import SQLAlchemy
-# import click
-# from flask import current_app, g
-# from flask.cli import with_appcontext
-# from datetime import datetime
-# db = SQLAlchemy()
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, DateTime, Boolean
+from sqlalchemy.orm import relationship
 
-# class Todo(db.Model):
-#     __tablename__ = 'todos'
-#     id = db.Column('todo_id', db.Integer, primary_key=True)
-#     title = db.Column(db.String(60))
-#     text = db.Column(db.String)
-#     done = db.Column(db.Boolean)
-#     pub_date = db.Column(db.DateTime)
+from datetime import datetime
+from hf1.database import db
 
-#     def __init__(self, title, text):
-#         self.title = title
-#         self.text = text
-#         self.done = False
-#         self.pub_date = datetime.utcnow()
+class Artikelgroep(db.Model):
+    __tablename__ = 'artikelgroepen'
+    id = Column(Integer, primary_key=True)
+    artikelen = relationship('Artikel')
+    omschrijving = Column(String(250), nullable=False)
+    aanmaak_datum = Column(DateTime)
 
-# class User(db.Model):
-#     __tablename__ = 'users'
-#     id = Column(db.Integer, primary_key=True)
-#     name = Column(db.String(50), unique=True)
-#     email = Column(db.String(120), unique=True)
+    def __init__(self, omschrijving):
+        self.omschrijving = omschrijving
+        self.aanmaak_datum = datetime.utcnow()
 
-#     def __init__(self, name=None, email=None):
-#         self.name = name
-#         self.email = email
+    def __repr__(self):
+        return '<Artikelgroep %r>' % (self.omschrijving)
 
-#     def __repr__(self):
-#         return '<User %r>' % (self.name)
 
-# def init_db():
-#     db.create_all()
+class Artikel(db.Model):
+    __tablename__ = 'artikelen'
+    id = Column(Integer, primary_key=True)
+    artikelgroep_id = Column(Integer, ForeignKey('artikelgroepen.id'))
+    artikelgroep = relationship(Artikelgroep)
+    omschrijving = Column(String(250), nullable=False)
+    actuele_voorraad = Column(Integer, nullable=False)
+    gewenste_minimale_voorraad = Column(Integer)
+    gewenste_maximale_voorraad = Column(Integer)
+    backorder_voorraad = Column(Integer)
+    advies_verkoopprijs = Column(Float)
+    aanmaak_datum = Column(DateTime, nullable=False)
+    vervallen = Column(Boolean, nullable=False)
 
-# @click.command('init-db')
-# @with_appcontext
-# def init_db_command():
-#     """Clear the existing data and create new tables."""
-#     init_db()
-#     click.echo('Initialized the database.')
+    def __init__(self, artikelgroep, omschrijving, advies_verkoopprijs):
+        self.omschrijving = omschrijving
+        self.artikelgroep = artikelgroep
+        self.actuele_voorraad = 0
+        self.gewenste_minimale_voorraad = 0
+        self.gewenste_maximale_voorraad = 0
+        self.backorder_voorraad = 0
+        self.advies_verkoopprijs = 0.0
+        self.advies_verkoopprijs = advies_verkoopprijs
+        self.aanmaak_datum = datetime.utcnow()
+        self.vervallen = False
 
-# def init_app(app):
-#     # app.teardown_appcontext(close_db)
-#     # print('init_db_command')
-#     app.cli.add_command(init_db_command)
+    def __repr__(self):
+        return '<Artikel %r>' % (self.omschrijving)
