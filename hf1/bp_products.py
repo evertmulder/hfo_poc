@@ -9,8 +9,6 @@ bp_products = Blueprint('bp_products', __name__, url_prefix='/products',
 
 @bp_products.route('/')
 def index():
-    # db.session.add(models.Artikelgroep("test"))
-    # db.session.commit()
     artikelgroepen = models.Artikelgroep.query.all()
     return render_template('products.html',
                            title='Producten',

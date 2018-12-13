@@ -2,6 +2,7 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 from hf1 import models
+from hf1 import models_account
 from hf1.database import db
 
 def init_db():
@@ -21,6 +22,9 @@ def fill_db():
     db.session.add(models.Artikel(groep_accessoires, "Nagel tips", 9.95))
 
     db.session.add(groep_accessoires)
+
+    db.session.add(models_account.Account("Evert","Mulder","evertmulder@gmail.com","06-51500540"))
+
     db.session.commit()
 
 @click.command('init-db')
