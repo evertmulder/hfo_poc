@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from hf1 import models_account
+from hf1.models import account_models
 from hf1.database import db
 
 bp_account = Blueprint('bp_account', __name__, url_prefix='/account',
@@ -28,18 +28,18 @@ def post_maak_account():
     if len(password) < 5:
         errors.append("Wachtwoord is te kort")
     if len(email) < 1:
-        errors.append("Email is verpicht")
+        errors.append("E-mailadres is verpicht")
     if voornaam.lower() == 'rudi':
         errors.append("Deze persoon komt er niet in!")
 
-    exising_account = models_account.Account.query.filter_by(
+    exising_account = account_models.Account.query.filter_by(
         email=email).first()
     if exising_account:
         errors.append("E-mailadres '%s' is al in gebruik." % email)
 
     if len(errors) == 0:
         try:
-            db.session.add(models_account.Account(
+            db.session.add(account_models.Account(
                 voornaam, achternaam, email, telefoon))
             db.session.commit()
         except:
