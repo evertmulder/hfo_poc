@@ -6,10 +6,15 @@ python3 -m venv venv
 # Install the requirements and the hfo module into the venv
 pip install -e .
 
-# Run the hfo flask app
+# Run the hfo flask app (Mac/Linux)
 export FLASK_APP=hf1
 export FLASK_ENV=development
 flask run
+
+# Run the hfo flask app (Windows Powershell)
+$env:FLASK_APP = "hf1"
+$env:FLASK_ENV = "development"
+python -m flask run
 ```
 
 The database is create in the instance directory. The following command line options are available:
@@ -27,27 +32,13 @@ APP_VERSION='0.1poc'
 SECRET_KEY='my_secret'
 ```
 
-When using VS Code, you can debug the app with the follwing ```launch.json```
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python: Flask",
-            "type": "python",
-            "request": "launch",
-            "module": "flask",
-            "env": {
-                "FLASK_APP": "hf1",
-                "FLASK_ENV": "development"
-            },
-            "args": [
-                "run",
-                "--no-debugger",
-                "--no-reload"
-            ],
-            "jinja": true
-        }
-    ]
-}
-```
+## Instruction on how to use VS Code
+
+* Install Visual Studio Code https://code.visualstudio.com/Download
+* Install the pyhton extension: Python
+* Select the Python venv (bottom left task bar)
+* Select the debug icon (left task bar)
+* Select the debug settings (right to the green play button)
+* Select Python->Flask->hf1 and a the flask config is added
+
+VS Code can now debug your flask web application.
