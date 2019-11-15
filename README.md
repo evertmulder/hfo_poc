@@ -1,29 +1,48 @@
+## Instruction how to install the Proof of Concept
+
 ```bash
-# create the venv and activate it
+# create the venv and activate it (Mac / Linux)
 python3 -m venv venv
 . venv/bin/activate
+```
 
-# Install the requirements and the hfo module into the venv
+```powershell
+# create the venv and activate it (Windows Powershell)
+python3 -m venv venv
+.\venv\Scripts\activate.bat
+```
+
+```# Install the requirements and the hfo module into the venv
 pip install -e .
 
 # Run the hfo flask app (Mac/Linux)
 export FLASK_APP=hf1
 export FLASK_ENV=development
-flask run
-
+flask run -h 0.0.0.0 -p 5000
+```
+```powershell
 # Run the hfo flask app (Windows Powershell)
 $env:FLASK_APP = "hf1"
 $env:FLASK_ENV = "development"
-python -m flask run
+python -m flask run -h 0.0.0.0 -p 5000
 ```
 
-The database is create in the instance directory. The following command line options are available:
+The database is created in the instance directory. The following command line options are available:
 ```bash
 # create a new database
 flask init-db
 
 # Recreate the database and fill with some demo data
 flask fill-db
+```
+
+If you're using Windows Powershell you use:
+```powershell
+# create a new database
+python -m flask init-db
+
+# Recreate the database and fill with some demo data
+python -m flask fill-db
 ```
 
 The app can be configure using an config.cfg file in the instance directory.
