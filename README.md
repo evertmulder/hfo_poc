@@ -9,7 +9,10 @@ python3 -m venv venv
 ```powershell
 # create the venv and activate it (Windows Powershell)
 python3 -m venv venv
-.\venv\Scripts\activate.bat
+
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
+
+.\venv\Scripts\activate.ps1
 ```
 
 ```# Install the requirements and the hfo module into the venv
@@ -20,6 +23,7 @@ export FLASK_APP=hf1
 export FLASK_ENV=development
 flask run -h 0.0.0.0 -p 5000
 ```
+
 ```powershell
 # Run the hfo flask app (Windows Powershell)
 $env:FLASK_APP = "hf1"
